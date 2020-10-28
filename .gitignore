@@ -1,0 +1,5 @@
+*.local
+**/node_modules/**/*
+/var/*
+!.gitignore
+!.gitkeep
