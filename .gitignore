@@ -1,5 +1,9 @@
 *.local
-**/node_modules/**/*
+/node_modules
+/public/build
 /var/*
+/vendor
 !.gitignore
 !.gitkeep
+*.cache
+*.log

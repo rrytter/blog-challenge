@@ -1,0 +1,23 @@
+
+version: '3.7'
+
+services:
+  app:
+    container_name: app
+    build:
+      context: .
+      dockerfile: ./docker/php/Dockerfile
+    ports:
+      - '9000:9000'
+      - '8000:8000'
+    volumes:
+      - ./:/var/www
+      - ./php.ini:/usr/local/etc/php/conf.d/extra-php-config.ini
+      - ./var/logs/symfony:/root/.symfony/log
+  node:
+    container_name: node
+    build:
+      context: ./docker/node
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/app

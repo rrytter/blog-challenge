@@ -7,7 +7,6 @@ use DateTime;
 
 class Post
 {
-    private DatabaseManager $databaseManager;
     private int $id;
     private string $title;
     private string $content;
@@ -15,15 +14,21 @@ class Post
     private DateTime $created;
     private DateTime $updated;
 
-    public function __construct(DatabaseManager $databaseManager, array $data = [])
-    {
-        $this->databaseManager = $databaseManager;
+    public function __construct(
+        private DatabaseManager $databaseManager,
+        array $data = []
+    ) {
         $this->id = isset($data['id']) ? (int) $data['id'] : 0;
         $this->title = isset($data['title']) ? (string) $data['title'] : '';
         $this->content = isset($data['content']) ? (string) $data['content'] : '';
         $this->status = isset($data['status']) ? (string) $data['status'] : '';
         $this->created = isset($data['created']) ? new DateTime($data['created']) : new DateTime();
         $this->updated = isset($data['updated']) ? new DateTime($data['updated']) : new DateTime();
+    }
+
+    public function getDatabaseManager(): DatabaseManager
+    {
+        return $this->databaseManager;
     }
 
     public static function getTable(): string
@@ -135,9 +140,9 @@ class Post
             return false;
         }
 
-        return $this->databaseManager->getConnection()
+        return $this->getDatabaseManager()->getConnection()
             ->prepare("DELETE FROM `{$this->getTable()}` WHERE `id` = :id;")
-            ->execute(['id' => $this->id])
+            ->execute(['id' => $this->getId()])
         ;
     }
 

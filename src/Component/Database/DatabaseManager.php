@@ -39,7 +39,12 @@ class DatabaseManager
 
     public function isEmpty(): bool
     {
-        if (preg_match('/^sqlite:(.+)$/', $this->parameters[0], $matches)) {
+        $parameters = $this->getParameters();
+        
+        if (
+            !empty($parameters)
+            && preg_match('/^sqlite:(.+)$/', $parameters[0], $matches)
+        ) {
             return !file_exists($matches[1]) || !filesize($matches[1]);
         }
 

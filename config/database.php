@@ -5,7 +5,7 @@
  * 
  * @link https://www.php.net/manual/ref.pdo-sqlite.connection.php
  */
-return ['sqlite:' . dirname(__DIR__). '/var/database_recommanded.sqlite'];
+return ['sqlite:' . dirname(__DIR__). '/var/database_enhanced.sqlite'];
 
 /**
  * MySQL Driver

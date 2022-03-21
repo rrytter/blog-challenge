@@ -3,14 +3,17 @@
 namespace App\Controller;
 
 use App\Component\Kernel\Kernel;
+use App\Component\Template\Renderer;
+use SplFileInfo;
 
 abstract class Controller
 {
-    private Kernel $kernel;
+    private Renderer $renderer;
 
-    public function __construct(Kernel $kernel)
-    {
-        $this->kernel = $kernel;
+    public function __construct(
+        private Kernel $kernel
+    ) {
+        $this->renderer = new Renderer($this->getKernel()->getRouter());
     }
 
     protected function getKernel(): Kernel
@@ -18,13 +21,16 @@ abstract class Controller
         return $this->kernel;
     }
 
+    private function getRenderer(): Renderer
+    {
+        return $this->renderer;
+    }
+
     protected function render(string $template, array $variables = []): string
     {
-        ob_start();
-        
-        extract($variables);
-        include "{$this->getKernel()->getProjectDir()}/templates/$template";
-        
-        return ob_get_clean();
+        return $this->getRenderer()->render(
+            new SplFileInfo("{$this->getKernel()->getProjectDir()}/templates/$template"),
+            $variables
+        );
     }
 }

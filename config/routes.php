@@ -1,15 +1,10 @@
 <?php
 
-use App\Component\Router\Route;
-use App\Controller\AdminController;
-use App\Controller\HomeController;
-use App\Controller\PostController;
+use App\Component\Routing\Route;
 
 return [
-    new Route('home', '#^/$#', [HomeController::class, 'index']),
-    new Route('article', '#^/article(?:/(\d+))?$#', [PostController::class, 'index']),
-    new Route('admin', '#^/admin$#', [AdminController::class, 'index']),
-    new Route('admin_create', '#^/admin/create$#', [AdminController::class, 'create']),
-    new Route('admin_update', '#^/admin/update/(\d+)$#', [AdminController::class, 'update']),
-    new Route('admin_delete', '#^/admin/delete/(\d+)$#', [AdminController::class, 'delete'])
+    new Route('admin_index', '/admin', 'App\\Controller\\AdminController', 'index'),
+    new Route('admin_create', '/admin/create', 'App\\Controller\\AdminController', 'create'),
+    new Route('admin_create', '/admin/update/{id}', 'App\\Controller\\AdminController', 'update'),
+    new Route('admin_delete', '/admin/delete/{id}', 'App\\Controller\\AdminController', 'delete'),
 ];

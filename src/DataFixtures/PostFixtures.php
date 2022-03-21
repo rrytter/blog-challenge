@@ -7,16 +7,18 @@ use App\Entity\Post;
 
 class PostFixtures
 {
-    private DatabaseManager $databaseManager;
+    public function __construct(
+        private DatabaseManager $databaseManager
+    ) {}
 
-    public function __construct(DatabaseManager $databaseManager)
+    private function getDatabaseManager(): DatabaseManager
     {
-        $this->databaseManager = $databaseManager;
+        return $this->databaseManager;
     }
 
-    public function load()
+    public function load(): void
     {
-        $this->databaseManager->getConnection()->exec(sprintf("CREATE TABLE `%s` (
+        $this->getDatabaseManager()->getConnection()->exec(sprintf("CREATE TABLE `%s` (
             'id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
             'title' TEXT,
             'content' TEXT,
@@ -40,7 +42,7 @@ class PostFixtures
             shuffle($lines); // Random content
             $timestamp = time() - $i * 3600 * 24; // -1 day in each cycle
 
-            (new Post($this->databaseManager, [
+            (new Post($this->getDatabaseManager(), [
                 'title'     => $lines[0],
                 'content'   => implode(' ', $lines),
                 'status'    => 'publish',
