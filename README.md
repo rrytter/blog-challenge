@@ -24,7 +24,7 @@ Article: /article/{post_id}
 
 ## Contraintes
 
-- PHP >= 7.4
+- PHP >= 8.1
 - MySQL/MariaDB ou SQLite
 - Aucun framework/vendor
 - Aucun .htaccess ou rewrite via le serveur web
