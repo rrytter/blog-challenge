@@ -1,16 +1,9 @@
-const composer = require("./composer.json");
 const path = require("path");
 const glob = require("glob");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
-const ImageminPlugin = require("imagemin-webpack-plugin").default;
-const NotifierPlugin = require("webpack-notifier");
-const WebpackBar = require("webpackbar");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const { WebpackManifestPlugin } = require("webpack-manifest-plugin");
-const IconfontPlugin = require('iconfont-plugin-webpack');
 
-// const src = "src/Resources/";
 const src = "assets/";
 const dest = "public/build/";
 
@@ -162,44 +155,10 @@ var config = {
     //     cwd: undefined
     //   },
     // }),
-    // new WebpackBar({
-    //   profile: true,
-    //   name: composer.description
-    // }),
-    new NotifierPlugin({
-      title: composer.description,
-      alwaysNotify: true,
-      // contentImage: "resources/logo.png"
-    }),
     new MiniCssExtractPlugin({
       filename: "[name].[contenthash].bundle.css"
     }),
-    new ImageminPlugin({
-      test: /\.(jpe?g|png|gif)$/i,
-      pngquant: {
-        quality: "95-100"
-      }
-    }),
   ],
-  optimization: {
-    minimizer: [
-      new UglifyJsPlugin({
-        cache: true,
-        parallel: true,
-        sourceMap: true,
-        uglifyOptions: {
-          compress: true,
-          ecma: 6,
-          mangle: true,
-          comments: false
-        },
-      })
-    ]
-  },
-  resolve: {
-    alias: {}
-  },
-  //node: { fs: "empty" },
   target: "web"
 };
 
